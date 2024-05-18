@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+    label-studio:
+        container_name: label-studio
+        image: heartexlabs/label-studio:latest
+        environment:
+        - PORT=8080
+        - ML_BACKEND=remote
+        - ML_BACKEND_URL=http://server:9090
+        - OPENAI_API_KEY=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
+        ports:
+        - 9080:8080
+        volumes:
+        - "./data:/label-studio/data"
+        - "./data/server:/data"
+
+    server:
+      container_name: server
+      image: humansignal/llm-interactive:v0
+      build: .
+      environment:
+        - MODEL_DIR=/data/models
+        - OPENAI_API_KEY=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
+        - OPENAI_MODEL=gpt-3.5-turbo
+#        - PROMPT_TEMPLATE=
+        - LOG_LEVEL=DEBUG
+        - TEMPERATURE=0.
+      ports:
+        - 9090:9090
+      volumes:
+        - "./data/server:/data"

@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+    label-studio:
+        container_name: label-studio
+        image: heartexlabs/label-studio:latest
+        environment:
+        - PORT=8080
+        ports:
+        - 9999:8080
+        volumes:
+        - "/Users/maria/data:/label-studio/data"
+        - "/Users/maria/data/server:/data"
+
+    llm:
+      container_name: llm
+      image: mar1a/llm-interactive:v0
+      build: ./lisutoner
+      environment:
+        - MODEL_DIR=/data/models
+        - OPENAI_API_KEY=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
+        - OPENAI_MODEL=gpt-3.5-turbo
+#        - PROMPT_TEMPLATE=
+        - LOG_LEVEL=DEBUG
+        - TEMPERATURE=0.
+      ports:
+        - 9090:9090
+      volumes:
+        - "/Users/maria/data/server:/data"
+
+    staging:
+      container_name: staging
+      image: mar1a/staging:v0
+      build: ./staging
+      environment:
+        - LOG_LEVEL=DEBUG
+      ports:
+        - 9091:9090
+      volumes:
+        - "/Users/maria/data/server:/data"
+
+    spacy:
+      container_name: spacy
+      build: ./spacy
+      image: mar1a/spacy:v0
+      environment:
+        - WORKERS=2
+        - THREADS=4
+        - LOG_LEVEL=DEBUG
+        - MODEL_DIR=/data/models
+        - SPACY_MODEL=ner_v1
+      volumes:
+        - "/Users/maria/data/server:/data"
+      ports:
+        - 9092:9090
