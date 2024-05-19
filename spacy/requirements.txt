@@ -1,8 +1,7 @@
 gunicorn==20.1.0
 rq==1.10.1
 spacy~=3.7.0
-sudachipy
-sudachidict_core
+pymorphy3
 loguru
 Pillow
 label-studio-ml @ git+https://github.com/HumanSignal/label-studio-ml-backend.git
