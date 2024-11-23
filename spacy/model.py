@@ -69,23 +69,30 @@ class SpacyMLBackend(LabelStudioMLBase):
     def remove_overlapping_entities(self, entities):
         """
         entities: list of entities with start, end, labels, and text
+        return: list of non-overlapping entities
         """
+        # Sort entities by their start position
         entities = sorted(entities, key=lambda x: x['start'])
         non_overlapping = []
-        for i, ent in enumerate(entities):
+
+        for ent in entities:
+            # If no entities in the list, add the first one
             if not non_overlapping:
                 non_overlapping.append(ent)
                 continue
 
             prev_ent = non_overlapping[-1]
-            if ent['start'] < prev_ent['end']:  # There is an overlap
+            if ent['start'] < prev_ent['end']:
+                # If strategy is to remove overlapping entities, skip the current entity
                 if self.OVERLAPPING_STRATEGY == 'remove':
                     continue
+                # If strategy is to keep the longest entity
                 elif self.OVERLAPPING_STRATEGY == 'longest':
                     if (ent['end'] - ent['start']) > (prev_ent['end'] - prev_ent['start']):
                         non_overlapping[-1] = ent
             else:
                 non_overlapping.append(ent)
+
         return non_overlapping
 
     # def predict(self, tasks, context, **kwargs):
@@ -101,6 +108,7 @@ class SpacyMLBackend(LabelStudioMLBase):
             # Convert Spacy entities to list of entities
             ents = self.spacy_ents_to_results(doc.ents)
             list_of_ents = self.check_ner_results(text, ents)
+            list_of_ents = self.remove_overlapping_entities(list_of_ents)
 
             # Convert entities to Label Studio format
             entities = []

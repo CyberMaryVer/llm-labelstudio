@@ -17,10 +17,9 @@ class OpenAIInteractive(LabelStudioMLBase):
     TEMPERATURE = float(os.getenv('TEMPERATURE', 0.7))
     OPENAI_MODEL = os.getenv('OPENAI_MODEL', 'gpt-3.5-turbo')
     IGNORED_ENTITIES = [
-        'PRODUCT',
-        'SINGLE_ITEM_QUANTITY',
-        'TOTAL_QUANTITY',
-        'PRODUCT_PROPERTY'
+        # 'ADDRESS',
+        # 'PHONE_NUMBER',
+        # 'EMAIL',
     ]
 
     def __init__(self, *args, **kwargs):
@@ -102,7 +101,7 @@ class OpenAIInteractive(LabelStudioMLBase):
         predictions = []
         for task in tasks:
             # Extract the text from the task
-            text = task['data']['text']
+            text = task['data'][value]
 
             # Request the LLM
             message = self.request_llm(text)

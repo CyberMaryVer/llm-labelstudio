@@ -5,4 +5,5 @@ langchain~=0.1.1
 langchain_openai~=0.0.2
 loguru
 tenacity==8.2.2
+pydantic
 label-studio-ml @ git+https://github.com/HumanSignal/label-studio-ml-backend.git

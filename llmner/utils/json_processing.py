@@ -1,6 +1,7 @@
 import json
 import re
 
+
 def extract_and_validate_json(text):
     # Trying return the JSON string as is
     try:

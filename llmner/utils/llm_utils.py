@@ -7,7 +7,7 @@ from langchain_community.callbacks import get_openai_callback
 from tenacity import retry, stop_after_attempt, wait_random_exponential, wait_random
 
 
-def create_langchain_prompt(user_prompt, mode="market_research"):
+def create_langchain_prompt(user_prompt, mode="general"):
     """
     Available modes: market_research, creative_writing, general
     """

@@ -1,14 +1,25 @@
 PROMPT_NER = """
-Extract from the text below these entities if any: ['PRODUCT', 'MAKER', 'MPN', 'COUNTRY', 'COLORS', 'PRODUCT_PROPERTY']
+Extract from the text in Russian below these entities if any: 
+    [
+    'NAME', 
+    'NICKNAME', 
+    'EMAIL', 
+    'ADDRESS',
+    'PHONE'
+    'SOCIAL_MEDIA',
+    'OTHER_PERSONAL_INFO'
+,,
 
-'PRODUCT' - Product Name
-'MAKER' - Manufacturer Name
-'MPN' - Manufacturer Part Number, if there are multiple MPNs, return list of all found
-'COUNTRY' - made in ... | country of origin (e.g. ['Japan', '日本'])
-'COLORS' - list of colors found in the text (e.g. ['green', 'lime', 'lightgreen'])
-'PRODUCT_PROPERTY' - list of characteristics of the product (e.g. ['strengthened', 'leather'], ['covered by gold'], ['boxed', 'heavy'] etc.). Each property up to 4 words
+'NAME' - list of names, first names, and patronymics, e.g. ['Иван', 'Иванович', 'Иванов', 'Ивановна']
+'NICKNAME' - list of nicknames, e.g. ['Вася', 'Кот Василий']
+'EMAIL' - list of email addresses
+'ADDRESS' - list of addresses, e.g. ['г. Москва, ул. Ленина, д. 1', 'пр. Невский, д. 2']
+'PHONE' - list of phone numbers, e.g. ['+7 (999) 123-45-67', '9901234']
+'SOCIAL_MEDIA' - list of social media accounts, e.g. ['@username', 'https://vk.com/username']
+'OTHER_PERSONAL_INFO' - other personal information, e.g. ['СНИЛС 123-456-789 00', 'ИНН 1234567890']
 
 Don't add additional text, return only valid JSON string, don't add any other text besides this.
+e.g. {"NAME": ["Иван", "Иванович"], "PHONE": ["+7 (999) 123-45-67", "9901234"]}
 
 TEXT:
 {query}

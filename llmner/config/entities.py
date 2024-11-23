@@ -1,26 +1,26 @@
 NER_ENTITIES = {
-    'PRODUCT': {
-        'description': 'Product Name',
-        'example': 'Product Name'
+    'NAME': {
+        'description': 'Person name',
+        'example': ['Иван', 'Иванович', 'Иванов', 'Ивановна']
     },
-    'MAKER': {
-        'description': 'Manufacturer Name',
-        'example': None
+    'NICKNAME': {
+        'description': 'Person nickname',
+        'example': ['Вася', 'Кот Василий']
     },
-    'MPN': {
-        'description': 'Manufacturer Part Number, if there are multiple MPNs, return list of all found',
-        'example': None
+    'EMAIL': {
+        'description': 'Email',
+        'example': ['vanya@mail.ru']
     },
-    'COUNTRY': {
-        'description': 'made in ... | country of origin',
-        'example': '[\'Japan\', \'日本\']'
+    'ADDRESS': {
+        'description': 'Address',
+        'example': ['г. Москва, ул. Ленина, д. 1', 'пр. Невский, д. 2']
     },
-    'COLORS': {
-        'description': 'list of colors found in the text',
-        'example': '[\'green\', \'lime\', \'lightgreen\']'
+    'PHONE': {
+        'description': 'Phone number',
+        'example': ['+7 (999) 123-45-67', '9901234']
     },
-    'PRODUCT_PROPERTY': {
-        'description': 'list of characteristics of the product',
-        'example': '[\'strengthened\', \'leather\'], [\'covered by gold\'], [\'boxed\', \'heavy\'] etc.'
+    'OTHER_PERSONAL_INFO': {
+        'description': 'Other personal information',
+        'example': ['СНИЛС 123-456-789 00', 'ИНН 1234567890']
     }
 }
