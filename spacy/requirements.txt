@@ -1,7 +1,7 @@
 gunicorn==20.1.0
 rq==1.10.1
 spacy
-numpy
+numpy<2.0.0
 pymorphy3
 loguru
 Pillow
