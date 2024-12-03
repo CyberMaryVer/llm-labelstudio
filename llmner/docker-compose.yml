@@ -30,3 +30,17 @@ services:
         - 9090:9090
       volumes:
         - "./data/server:/data"
+
+    ml-backend:
+      container_name: ml-backend
+      build: ../spacy
+      environment:
+        - WORKERS=2
+        - THREADS=4
+        - LOG_LEVEL=DEBUG
+        - MODEL_DIR=/data/models
+        - SPACY_MODEL=model_v0
+      volumes:
+        - "./data:/data"
+      ports:
+        - 9091:9091
