@@ -39,7 +39,7 @@ services:
         - WORKERS=2
         - THREADS=4
         - LOG_LEVEL=DEBUG
-#        - MODEL_DIR=/data/models
+        - MODEL_DIR=/data/models
         - SPACY_MODEL=ner_v1
       volumes:
         - "./data/server:/data"
