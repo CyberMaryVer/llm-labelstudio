@@ -2,10 +2,13 @@ version: "3.8"
 
 services:
     label-studio:
-        container_name: label-studio
-        image: heartexlabs/label-studio:latest
+#        container_name: label-studio
+        image: heartexlabs/label-studio:develop
         environment:
         - PORT=8080
+        - ML_BACKEND=remote
+        - ML_BACKEND_URL=http://llm:9090
+        - OPENAI_API_KEY=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
         ports:
         - 8080:8080
         volumes:
