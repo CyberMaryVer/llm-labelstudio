@@ -7,7 +7,7 @@ services:
         environment:
         - PORT=8080
         ports:
-        - 9999:8080
+        - 8080:8080
         volumes:
         - "./data:/label-studio/data"
         - "./data/server:/data"
@@ -41,4 +41,4 @@ services:
       volumes:
         - "./data/server:/data"
       ports:
-        - 9092:9090
+        - 9091:9091
