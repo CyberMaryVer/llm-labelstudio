@@ -104,6 +104,7 @@ class SpacyMLBackend(LabelStudioMLBase):
             text = task['data'][value]
             text = process_query_text(text)
             doc = nlp(text)
+            logger.info(f"\033[095mNER Result: {doc.ents}\033[0m")
 
             # Convert Spacy entities to list of entities
             ents = self.spacy_ents_to_results(doc.ents)
