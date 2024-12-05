@@ -141,7 +141,7 @@ if __name__ == "__main__":
         # model = NewModel(**kwargs)
 
     # Initialize the app with the model instance
-    app = init_app(model=model)
+    app = init_app(model_class=model)
 
     app.run(host=args.host, port=args.port, debug=args.debug)
 
@@ -149,4 +149,4 @@ else:
     # For uWSGI use
     model = NewModel(**kwargs)
     # Initialize the app with the model instance
-    app = init_app(model=model)
+    app = init_app(model_class=model)
