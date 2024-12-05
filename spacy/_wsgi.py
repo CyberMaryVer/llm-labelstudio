@@ -30,6 +30,7 @@ logging.config.dictConfig({
 
 from label_studio_ml.api import init_app
 from model import SpacyMLBackend as NewModel
+# from flask import Flask, request, jsonify
 
 
 _DEFAULT_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'config.json')

@@ -7,7 +7,7 @@ services:
         environment:
         - PORT=8080
         - ML_BACKEND=remote
-        - ML_BACKEND_URL=http://llm:9090
+        - ML_BACKEND_URL=http://spacy:9090
         - OPENAI_API_KEY=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
         ports:
         - 8080:8080
@@ -27,7 +27,7 @@ services:
         - LOG_LEVEL=DEBUG
         - TEMPERATURE=0.
       ports:
-        - 9090:9090
+        - 9091:9091
       volumes:
         - "./data/server:/data"
 
@@ -44,4 +44,4 @@ services:
       volumes:
         - "./data/server:/data"
       ports:
-        - 9091:9091
+        - 9090:9090
