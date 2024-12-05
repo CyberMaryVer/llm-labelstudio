@@ -97,6 +97,10 @@ class SpacyMLBackend(LabelStudioMLBase):
 
     # def predict(self, tasks, context, **kwargs):
     def predict(self, tasks: List[Dict], context: Optional[Dict] = None, **kwargs) -> List[Dict]:
+        # Initialize label_interface if label_config is provided in context
+        if context and 'label_config' in context:
+            self.use_label_config(context['label_config'])
+
         from_name, to_name, value = self.get_first_tag_occurence('Labels', 'Text')
         predictions = []
         for task in tasks:
