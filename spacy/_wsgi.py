@@ -5,27 +5,27 @@ import logging
 import logging.config
 
 logging.config.dictConfig({
-    "version": 1,
-    "formatters": {
-        "standard": {
-            "format": "[%(asctime)s] [%(levelname)s] [%(name)s::%(funcName)s::%(lineno)d] %(message)s"
-        }
-    },
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-            "level": os.getenv('LOG_LEVEL'),
-            "stream": "ext://sys.stdout",
-            "formatter": "standard"
-        }
-    },
-    "root": {
-        "level": os.getenv('LOG_LEVEL'),
-        "handlers": [
-            "console"
-        ],
-        "propagate": True
+  "version": 1,
+  "formatters": {
+    "standard": {
+      "format": "[%(asctime)s] [%(levelname)s] [%(name)s::%(funcName)s::%(lineno)d] %(message)s"
     }
+  },
+  "handlers": {
+    "console": {
+      "class": "logging.StreamHandler",
+      "level": os.getenv('LOG_LEVEL'),
+      "stream": "ext://sys.stdout",
+      "formatter": "standard"
+    }
+  },
+  "root": {
+    "level": os.getenv('LOG_LEVEL'),
+    "handlers": [
+      "console"
+    ],
+    "propagate": True
+  }
 })
 
 label_config = '''
@@ -41,7 +41,6 @@ label_config = '''
 
 from label_studio_ml.api import init_app
 from model import SpacyMLBackend as NewModel
-
 # from flask import Flask, request, jsonify
 
 
@@ -56,24 +55,6 @@ def get_kwargs_from_config(config_path=_DEFAULT_CONFIG_PATH):
     assert isinstance(config, dict)
     return config
 
-
-# Initialize kwargs here so they are available globally
-kwargs = get_kwargs_from_config()
-
-# Define your label_config directly in the code
-label_config = '''
-<View>
-  <Labels name="label" toName="text">
-    <Label value="Positive" />
-    <Label value="Negative" />
-    <Label value="Neutral" />
-  </Labels>
-  <Text name="text" value="$text" />
-</View>
-'''
-
-# Add label_config to kwargs
-kwargs['label_config'] = label_config
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Label studio')
@@ -101,10 +82,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    # Setup logging level
+    # setup logging level
     if args.log_level:
         logging.root.setLevel(args.log_level)
-
 
     def isfloat(value):
         try:
@@ -113,15 +93,14 @@ if __name__ == "__main__":
         except ValueError:
             return False
 
-
     def parse_kwargs():
         param = dict()
         for k, v in args.kwargs:
             if v.isdigit():
                 param[k] = int(v)
-            elif v.lower() == 'true':
+            elif v == 'True' or v == 'true':
                 param[k] = True
-            elif v.lower() == 'false':
+            elif v == 'False' or v == 'false':
                 param[k] = False
             elif isfloat(v):
                 param[k] = float(v)
@@ -129,24 +108,24 @@ if __name__ == "__main__":
                 param[k] = v
         return param
 
+    kwargs = get_kwargs_from_config()
+
+    # add label config to kwargs
+    kwargs['label_config'] = label_config
+
     if args.kwargs:
         kwargs.update(parse_kwargs())
 
-    # Instantiate the model with kwargs
-    model = NewModel(**kwargs)
-
     if args.check:
         print('Check "' + NewModel.__name__ + '" instance creation..')
-        # Model is already instantiated above
-        # model = NewModel(**kwargs)
+        model = NewModel(**kwargs)
 
-    # Initialize the app with the model instance
-    app = init_app(model_class=model)
+    app = init_app(
+        model_class=NewModel
+    )
 
     app.run(host=args.host, port=args.port, debug=args.debug)
 
 else:
-    # For uWSGI use
-    model = NewModel(**kwargs)
-    # Initialize the app with the model instance
-    app = init_app(model_class=model)
+    # for uWSGI use
+    app = init_app(model_class=NewModel)
