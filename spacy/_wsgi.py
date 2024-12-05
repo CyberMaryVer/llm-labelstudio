@@ -28,16 +28,16 @@ logging.config.dictConfig({
   }
 })
 
-label_config = '''
-<View>
-  <Labels name="label" toName="text">
-    <Label value="Positive" />
-    <Label value="Negative" />
-    <Label value="Neutral" />
-  </Labels>
-  <Text name="text" value="$text" />
-</View>
-'''
+# label_config = '''
+# <View>
+#   <Labels name="label" toName="text">
+#     <Label value="Positive" />
+#     <Label value="Negative" />
+#     <Label value="Neutral" />
+#   </Labels>
+#   <Text name="text" value="$text" />
+# </View>
+# '''
 
 from label_studio_ml.api import init_app
 from model import SpacyMLBackend as NewModel
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     kwargs = get_kwargs_from_config()
 
     # add label config to kwargs
-    kwargs['label_config'] = label_config
+    # kwargs['label_config'] = label_config
 
     if args.kwargs:
         kwargs.update(parse_kwargs())
