@@ -21,20 +21,26 @@ class SpacyMLBackend(LabelStudioMLBase):
     OVERLAPPING_STRATEGY = 'longest'  # 'remove', 'longest'
 
     def __init__(self, **kwargs):
-        # Define your label_config directly in the model
-        label_config = '''
-        <View>
-          <Labels name="label" toName="text">
-            <Label value="PER" background="red"/>
-            <Label value="ORG" background="darkorange"/>
-            <Label value="LOC" background="orange"/>
-            <Label value="MISC" background="green"/>
-          </Labels>
-          <Text name="text" value="$text"/>
-        </View>
-        '''
+        # Extract and remove label_config from kwargs if it exists
+        label_config = kwargs.pop('label_config', None)
+
+        # If label_config is not provided, define a default one
+        if label_config is None:
+            label_config = '''
+                    <View>
+                      <Labels name="label" toName="text">
+                        <Label value="PER" background="red"/>
+                        <Label value="ORG" background="darkorange"/>
+                        <Label value="LOC" background="orange"/>
+                        <Label value="MISC" background="green"/>
+                      </Labels>
+                      <Text name="text" value="$text"/>
+                    </View>
+                    '''
+
         # Initialize the base class with label_config
         super().__init__(label_config=label_config, **kwargs)
+        logger.info(f"label_interface initialized: {hasattr(self, 'label_interface')}")
 
     def spacy_ents_to_results(self, ents):
         results = {}
