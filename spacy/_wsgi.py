@@ -28,6 +28,17 @@ logging.config.dictConfig({
   }
 })
 
+label_config = '''
+<View>
+  <Labels name="label" toName="text">
+    <Label value="Positive" />
+    <Label value="Negative" />
+    <Label value="Neutral" />
+  </Labels>
+  <Text name="text" value="$text" />
+</View>
+'''
+
 from label_studio_ml.api import init_app
 from model import SpacyMLBackend as NewModel
 # from flask import Flask, request, jsonify
@@ -99,6 +110,9 @@ if __name__ == "__main__":
 
     kwargs = get_kwargs_from_config()
 
+    # add label config to kwargs
+    kwargs['label_config'] = label_config
+
     if args.kwargs:
         kwargs.update(parse_kwargs())
 
@@ -106,7 +120,9 @@ if __name__ == "__main__":
         print('Check "' + NewModel.__name__ + '" instance creation..')
         model = NewModel(**kwargs)
 
-    app = init_app(model_class=NewModel)
+    app = init_app(
+        model_class=NewModel
+    )
 
     app.run(host=args.host, port=args.port, debug=args.debug)
 

@@ -20,6 +20,9 @@ class SpacyMLBackend(LabelStudioMLBase):
     IGNORED_ENTITIES = ['PRODUCT', 'URL']
     OVERLAPPING_STRATEGY = 'longest'  # 'remove', 'longest'
 
+    def __init__(self, **kwargs):
+        super(SpacyMLBackend, self).__init__(**kwargs)
+
     def spacy_ents_to_results(self, ents):
         results = {}
         for ent in ents:
