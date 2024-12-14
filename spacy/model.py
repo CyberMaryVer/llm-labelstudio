@@ -12,6 +12,7 @@ from preprocess import process_query_text
 HOSTNAME = get_env('HOSTNAME', 'http://localhost:8080')
 API_KEY = get_env('API_KEY')
 SPACY_MODEL = os.path.join(os.getenv('MODEL_DIR', './models'), os.getenv('SPACY_MODEL', 'checkpoint'))
+print(f"\033[090mSPACY_MODEL ENV VAR: {os.getenv('SPACY_MODEL')}\033[0m")
 print(f"\033[093mSpacy Model: {SPACY_MODEL}\033[0m")
 nlp = spacy.load(SPACY_MODEL)
 
