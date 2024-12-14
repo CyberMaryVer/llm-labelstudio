@@ -36,11 +36,11 @@ services:
       build: ./spacy
       image: mar1a/spacy:v0
       environment:
-        - WORKERS=2
-        - THREADS=4
-        - LOG_LEVEL=DEBUG
-        - MODEL_DIR=/data/models
-        - SPACY_MODEL=model_018
+        WORKERS: ${WORKERS:-2}
+        THREADS: ${THREADS:-4}
+        LOG_LEVEL: ${LOG_LEVEL:-DEBUG}
+        MODEL_DIR: ${MODEL_DIR:-/data/models}
+        SPACY_MODEL: ${SPACY_MODEL:-model_018}
       volumes:
         - "./data/server:/data"
       ports:
